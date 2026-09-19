@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Arpan Sethiya — Java Developer with 7+ years of experience in Java, Spring Boot, Microservices, Apache Spark and AWS.">
-  <title>Arpan Sethiya | Senior Java Developer</title>
+  <title>Arpan Sethiya | Java Developer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -192,10 +192,51 @@
         max-width: 150px;
     }
 }
+
+.sound-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+
+    width: 42px;
+    height: 42px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: rgba(0, 0, 0, 0.75);
+    color: white;
+
+    font-size: 18px;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 9999;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+
+    transition: all 0.3s ease;
+}
+
+.sound-btn:hover {
+    transform: scale(1.1);
+    background: rgba(0, 0, 0, 0.9);
+}
 	
   </style>
 </head>
 <body>
+<audio id="backgroundSound" loop preload="auto">
+    <source src="assets/sound.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Sound Button -->
+<button id="soundToggle" class="sound-btn" aria-label="Mute sound">
+    🔊
+</button>
   <nav class="nav">
     <div class="container nav-inner">
       <!--<a class="brand" href="#home">arpan<span>.dev</span></a>-->
@@ -218,7 +259,7 @@
           <div class="eyebrow"><span class="dot"></span> Open to building scalable software</div>
           <h1>Hi, I'm <span class="gradient">Arpan Sethiya.</span><br>Java Developer.</h1>
           <p>
-            Results-driven software developer with <strong>7 years of experience</strong> in analysis, design,
+            Results-driven software developer with <strong>7+ years of experience</strong> in analysis, design,
             development, testing and implementation of enterprise-grade applications using Java, Spring Boot,
             Microservices, Apache Spark and AWS.
           </p>
@@ -249,7 +290,7 @@
             <div><span class="key">developer</span>: <span class="value">"Arpan Sethiya"</span></div>
             <div><span class="key">role</span>: <span class="value">"Sr. Associate Technology"</span></div>
             <div><span class="key">specialization</span>: <span class="value">"Java / Spring Boot"</span></div>
-            <div><span class="key">experience</span>: <span class="value">"7 years"</span></div>
+            <div><span class="key">experience</span>: <span class="value">"7+ years"</span></div>
             <div><span class="key">location</span>: <span class="value">"Pune, India"</span></div>
             <div><span class="key">methodology</span>: <span class="value">"Agile / Scrum / Waterfall"</span></div>
           </div>
@@ -273,14 +314,15 @@
         <div class="panel reveal">
           <div class="skills">
             <span class="skill">Core Java</span><span class="skill">J2EE</span><span class="skill">JSP</span><span class="skill">Servlets</span>
-            <span class="skill">JDBC</span><span class="skill">JavaScript</span><span class="skill">HTML5</span><span class="skill">CSS</span><span class="skill">SQL</span>
-            <span class="skill">Spring</span><span class="skill">Spring Boot</span><span class="skill">Spring MVC</span><span class="skill">Hibernate</span>
+            <span class="skill">JDBC</span><span class="skill">Spring</span><span class="skill">Spring Boot</span><span class="skill">Spring MVC</span><span class="skill">Hibernate</span>
             <span class="skill">JPA</span><span class="skill">Struts 2</span><span class="skill">REST APIs</span><span class="skill">Microservices</span>
-            <span class="skill">Apache Spark</span><span class="skill">MySQL</span><span class="skill">SQL Server</span><span class="skill">Oracle</span>
+            <span class="skill">JavaScript</span><span class="skill">HTML5</span><span class="skill">CSS</span>
+			<span class="skill">Apache Spark</span><span class="skill">MySQL</span><span class="skill">SQL</span><span class="skill">Oracle</span>
             <span class="skill">Apache Tomcat</span><span class="skill">JBoss</span><span class="skill">AWS S3</span><span class="skill">AWS SES</span>
             <span class="skill">CloudFront</span><span class="skill">Git</span><span class="skill">Maven</span><span class="skill">IntelliJ</span>
             <span class="skill">Eclipse</span><span class="skill">STS</span><span class="skill">NetBeans</span><span class="skill">DBeaver</span>
-            <span class="skill">S3 Browser</span><span class="skill">Oracle SQL Developer</span><span class="skill">GitHub Copilot</span><span class="skill">ChatGPT</span>
+            <span class="skill">S3 Browser</span><span class="skill">Oracle SQL Developer</span><span class="skill">Grafana</span><span class="skill">Jenkins</span>
+			<span class="skill">GitHub Copilot</span><span class="skill">ChatGPT</span>
           </div>
         </div>
       </div>
@@ -408,6 +450,55 @@
       });
     }, { threshold: 0.12 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+	
+	 const backgroundSound = document.getElementById("backgroundSound");
+    const soundToggle = document.getElementById("soundToggle");
+
+    // Volume: 0.0 to 1.0
+    backgroundSound.volume = 0.5;
+
+    // Try to start sound automatically
+    window.addEventListener("load", async () => {
+        try {
+            await backgroundSound.play();
+
+            // Autoplay allowed
+            soundToggle.textContent = "🔊";
+            soundToggle.setAttribute("aria-label", "Mute sound");
+
+        } catch (error) {
+            // Chrome blocked autoplay
+            console.log("Autoplay blocked by browser.");
+            soundToggle.textContent = "🔇";
+            soundToggle.setAttribute("aria-label", "Play sound");
+        }
+    });
+
+    // Sound button
+    soundToggle.addEventListener("click", async () => {
+
+        if (backgroundSound.paused) {
+            try {
+                await backgroundSound.play();
+                soundToggle.textContent = "🔊";
+                soundToggle.setAttribute("aria-label", "Mute sound");
+            } catch (error) {
+                console.log("Unable to play sound:", error);
+            }
+
+        } else {
+            backgroundSound.muted = !backgroundSound.muted;
+
+            if (backgroundSound.muted) {
+                soundToggle.textContent = "🔇";
+                soundToggle.setAttribute("aria-label", "Unmute sound");
+            } else {
+                soundToggle.textContent = "🔊";
+                soundToggle.setAttribute("aria-label", "Mute sound");
+            }
+        }
+    });
+	
   </script>
 </body>
 </html>
